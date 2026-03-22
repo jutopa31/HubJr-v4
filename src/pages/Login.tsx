@@ -128,7 +128,7 @@ export function Login({ onLogin }: LoginProps) {
             style={{ background: 'var(--bg1)', border: '1px solid var(--border)' }}>
             <span className="font-mono" style={{ color: 'var(--teal)' }}>jefe@residencia.com</span>
             {' · '}
-            <span className="font-mono text-t3">HubJr2026!</span>
+            <span className="font-mono text-t3">HubJr2026</span>
           </div>
         )}
       </div>
