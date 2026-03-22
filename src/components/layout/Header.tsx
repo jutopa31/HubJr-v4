@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus, LogOut } from 'lucide-react'
 import type { Section, AppUser } from '../../types'
 
 interface HeaderProps {
   section: Section
   user: AppUser
   onAction?: () => void
+  onLogout?: () => void
 }
 
 const sectionMeta: Record<Section, { title: string; subtitle: string }> = {
@@ -41,7 +42,7 @@ function useTime() {
   return time
 }
 
-export function Header({ section, user, onAction }: HeaderProps) {
+export function Header({ section, user, onAction, onLogout }: HeaderProps) {
   const time = useTime()
   const meta = sectionMeta[section]
   const showAction = user.role === 'jefe' && section !== 'dashboard'
@@ -73,6 +74,17 @@ export function Header({ section, user, onAction }: HeaderProps) {
           >
             <Plus size={13} />
             {label}
+          </button>
+        )}
+
+        {onLogout && (
+          <button
+            onClick={onLogout}
+            title="Cerrar sesión"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80 active:scale-95"
+            style={{ background: 'var(--bg2)', color: 'var(--t2)', border: '1px solid var(--border)' }}
+          >
+            <LogOut size={13} />
           </button>
         )}
       </div>

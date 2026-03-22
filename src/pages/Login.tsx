@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { AppUser } from '../types'
-import { mockLogin } from '../lib/auth'
+import { login } from '../lib/auth'
+import { IS_MOCK } from '../lib/supabase'
 import { Brain, Lock, Mail, AlertCircle } from 'lucide-react'
 
 interface LoginProps {
@@ -13,20 +14,20 @@ export function Login({ onLogin }: LoginProps) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     if (!email.trim()) { setError('Ingresá un email'); return }
     setLoading(true)
-    setTimeout(() => {
-      const user = mockLogin(email, password)
-      if (user) {
-        onLogin(user)
-      } else {
-        setError('Credenciales inválidas')
-      }
+    try {
+      const user = await login(email, password)
+      onLogin(user)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al iniciar sesión'
+      setError(msg)
+    } finally {
       setLoading(false)
-    }, 600)
+    }
   }
 
   return (
@@ -118,12 +119,14 @@ export function Login({ onLogin }: LoginProps) {
         </div>
 
         {/* Demo info */}
-        <div className="mt-4 p-3 rounded-xl text-[10.5px] text-t2 text-center"
-          style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
-          <span className="text-t3">Modo demo — </span>
-          Usá <span className="font-mono text-teal">jefe@residencia.com</span> para acceso de jefatura,
-          o cualquier email para entrar como residente.
-        </div>
+        {IS_MOCK && (
+          <div className="mt-4 p-3 rounded-xl text-[10.5px] text-t2 text-center"
+            style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
+            <span className="text-t3">Modo demo — </span>
+            Usá <span className="font-mono text-teal">jefe@residencia.com</span> para acceso de jefatura,
+            o cualquier email para entrar como residente.
+          </div>
+        )}
       </div>
     </div>
   )
