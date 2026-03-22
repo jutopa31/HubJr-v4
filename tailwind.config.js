@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
-        dm: ['DM Sans', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        syne:  ['Nunito', 'sans-serif'],
+        dm:    ['Plus Jakarta Sans', 'sans-serif'],
+        mono:  ['Fira Code', 'monospace'],
       },
       colors: {
         bg0: 'var(--bg0)',

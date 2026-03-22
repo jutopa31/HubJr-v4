@@ -31,43 +31,51 @@ export function Login({ onLogin }: LoginProps) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative" style={{ background: 'var(--bg0)' }}>
-      {/* Background glow */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse at 50% 20%, rgba(5,217,164,0.06) 0%, transparent 60%)'
-      }} />
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden" style={{ background: 'var(--bg0)' }}>
+      {/* Warm background blobs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div style={{
+          position: 'absolute', top: '-10%', left: '-5%',
+          width: 500, height: 500, borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(58,115,255,0.10) 0%, transparent 70%)'
+        }} />
+        <div style={{
+          position: 'absolute', bottom: '-10%', right: '-5%',
+          width: 400, height: 400, borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%)'
+        }} />
+      </div>
 
-      <div className="relative w-full max-w-[380px] mx-4 animate-slideUp">
+      <div className="relative w-full max-w-[400px] mx-4 animate-slideUp">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4"
-            style={{ background: 'var(--tealdim)', border: '1px solid var(--borderact)' }}>
-            <Brain size={26} className="text-teal" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl mb-5"
+            style={{
+              background: 'linear-gradient(135deg, #3A73FF 0%, #6EA4FF 100%)',
+              boxShadow: '0 8px 32px rgba(58,115,255,0.30)'
+            }}>
+            <Brain size={30} color="white" />
           </div>
-          <h1 className="font-syne font-bold text-t1 text-2xl leading-tight">HubJr V4</h1>
-          <p className="text-t2 text-[12px] mt-1">Jefatura de Residentes de Neurología</p>
+          <h1 className="font-syne font-black text-t1 text-3xl leading-tight tracking-tight">HubJr</h1>
+          <p className="text-t2 text-[13px] mt-1.5 font-medium">Residencia de Neurología</p>
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl p-6" style={{ background: 'var(--bg1)', border: '1px solid var(--border)' }}>
-          <h2 className="font-syne font-semibold text-t1 text-[15px] mb-5">Iniciar sesión</h2>
+        <div className="rounded-3xl p-7" style={{ background: 'var(--bg1)', boxShadow: 'var(--shadow-lg)' }}>
+          <h2 className="font-syne font-bold text-t1 text-[16px] mb-6">Bienvenido 👋</h2>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {/* Email */}
             <div>
-              <label className="block text-t2 text-[11px] mb-1.5 font-medium">Email</label>
+              <label className="block text-t2 text-[11.5px] mb-2 font-semibold">Email</label>
               <div className="relative">
-                <Mail size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-t3" />
+                <Mail size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--t3)' }} />
                 <input
                   type="text"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="tu@email.com"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-lg text-[12.5px] text-t1 placeholder-t3 outline-none transition-all"
-                  style={{
-                    background: 'var(--bg2)',
-                    border: '1px solid var(--border)',
-                  }}
+                  className="w-full pl-10 pr-4 py-3 rounded-2xl text-[13px] outline-none transition-all"
+                  style={{ background: 'var(--bg2)', border: '1.5px solid var(--border)', color: 'var(--t1)' }}
                   onFocus={e => e.currentTarget.style.borderColor = 'var(--borderact)'}
                   onBlur={e => e.currentTarget.style.borderColor = 'var(--border)'}
                   autoComplete="email"
@@ -75,21 +83,17 @@ export function Login({ onLogin }: LoginProps) {
               </div>
             </div>
 
-            {/* Password */}
             <div>
-              <label className="block text-t2 text-[11px] mb-1.5 font-medium">Contraseña</label>
+              <label className="block text-t2 text-[11.5px] mb-2 font-semibold">Contraseña</label>
               <div className="relative">
-                <Lock size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-t3" />
+                <Lock size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--t3)' }} />
                 <input
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-lg text-[12.5px] text-t1 placeholder-t3 outline-none transition-all"
-                  style={{
-                    background: 'var(--bg2)',
-                    border: '1px solid var(--border)',
-                  }}
+                  className="w-full pl-10 pr-4 py-3 rounded-2xl text-[13px] outline-none transition-all"
+                  style={{ background: 'var(--bg2)', border: '1.5px solid var(--border)', color: 'var(--t1)' }}
                   onFocus={e => e.currentTarget.style.borderColor = 'var(--borderact)'}
                   onBlur={e => e.currentTarget.style.borderColor = 'var(--border)'}
                   autoComplete="current-password"
@@ -97,34 +101,34 @@ export function Login({ onLogin }: LoginProps) {
               </div>
             </div>
 
-            {/* Error */}
             {error && (
-              <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-[11.5px]"
+              <div className="flex items-center gap-2 px-4 py-3 rounded-2xl text-[12px] font-medium"
                 style={{ background: 'var(--reddim)', color: 'var(--red)' }}>
-                <AlertCircle size={13} />
+                <AlertCircle size={14} />
                 {error}
               </div>
             )}
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-lg font-syne font-semibold text-[13px] text-bg0 transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-60 mt-1"
-              style={{ background: 'var(--teal)' }}
+              className="w-full py-3 rounded-2xl font-syne font-bold text-[14px] text-white transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-50 mt-1"
+              style={{
+                background: 'linear-gradient(135deg, #3A73FF 0%, #6EA4FF 100%)',
+                boxShadow: loading ? 'none' : '0 4px 16px rgba(58,115,255,0.35)'
+              }}
             >
-              {loading ? 'Entrando...' : 'Entrar'}
+              {loading ? 'Iniciando sesión...' : 'Ingresar'}
             </button>
           </form>
         </div>
 
-        {/* Demo info */}
-        {IS_MOCK && (
-          <div className="mt-4 p-3 rounded-xl text-[10.5px] text-t2 text-center"
-            style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
-            <span className="text-t3">Modo demo — </span>
-            Usá <span className="font-mono text-teal">jefe@residencia.com</span> para acceso de jefatura,
-            o cualquier email para entrar como residente.
+        {!IS_MOCK && (
+          <div className="mt-4 p-3.5 rounded-2xl text-[11px] text-t2 text-center font-medium"
+            style={{ background: 'var(--bg1)', border: '1px solid var(--border)' }}>
+            <span className="font-mono" style={{ color: 'var(--teal)' }}>jefe@residencia.com</span>
+            {' · '}
+            <span className="font-mono text-t3">HubJr2026!</span>
           </div>
         )}
       </div>

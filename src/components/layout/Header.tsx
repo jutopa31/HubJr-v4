@@ -51,17 +51,17 @@ export function Header({ section, user, onAction, onLogout }: HeaderProps) {
   return (
     <header
       className="flex items-center justify-between px-6 py-4 flex-shrink-0"
-      style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg1)' }}
+      style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg1)', boxShadow: '0 1px 8px rgba(30,50,120,0.05)' }}
     >
       <div>
-        <h1 className="font-syne font-bold text-t1 text-[17px] leading-tight">{meta.title}</h1>
-        <p className="text-t3 text-[11px] mt-0.5">{meta.subtitle}</p>
+        <h1 className="font-syne font-extrabold text-t1 text-[19px] leading-tight">{meta.title}</h1>
+        <p className="text-t3 text-[11.5px] mt-0.5 font-medium">{meta.subtitle}</p>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         <div
-          className="px-3 py-1.5 rounded-lg font-mono text-[11px] text-t2"
-          style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}
+          className="px-3 py-1.5 rounded-xl font-mono text-[11.5px] font-medium"
+          style={{ background: 'var(--bg2)', color: 'var(--t2)', border: '1px solid var(--border)' }}
         >
           {time}
         </div>
@@ -69,8 +69,8 @@ export function Header({ section, user, onAction, onLogout }: HeaderProps) {
         {showAction && label && (
           <button
             onClick={onAction}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11.5px] font-medium text-bg0 transition-all hover:opacity-90 active:scale-95"
-            style={{ background: 'var(--teal)' }}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[12px] font-bold text-white transition-all hover:opacity-90 active:scale-95"
+            style={{ background: 'linear-gradient(135deg, #3A73FF 0%, #6EA4FF 100%)', boxShadow: '0 3px 12px rgba(58,115,255,0.30)' }}
           >
             <Plus size={13} />
             {label}
@@ -81,8 +81,8 @@ export function Header({ section, user, onAction, onLogout }: HeaderProps) {
           <button
             onClick={onLogout}
             title="Cerrar sesión"
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80 active:scale-95"
-            style={{ background: 'var(--bg2)', color: 'var(--t2)', border: '1px solid var(--border)' }}
+            className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-[11px] font-medium transition-all hover:bg-bg3 active:scale-95"
+            style={{ color: 'var(--t2)', border: '1px solid var(--border)' }}
           >
             <LogOut size={13} />
           </button>
