@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HubJr V3 — Residencia</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:#07080D;color:#EDF0F7}
+:root{
+  --bg0:#07080D;--bg1:#0C0E16;--bg2:#12151F;--bg3:#191D2A;--bg4:#1E2235;
+  --border:rgba(255,255,255,0.06);--borderact:rgba(5,217,164,0.28);
+  --teal:#05D9A4;--tealdim:rgba(5,217,164,0.10);--tealglow:0 0 20px rgba(5,217,164,0.18);
+  --amber:#F0A500;--amberdim:rgba(240,165,0,0.12);
+  --red:#E84C4C;--reddim:rgba(232,76,76,0.12);
+  --indigo:#6B7FD7;--indigodim:rgba(107,127,215,0.12);
+  --green:#4ADE80;--greendim:rgba(74,222,128,0.12);
+  --t1:#EDF0F7;--t2:#7D889C;--t3:#3D4459;
+  --sw:220px;--hh:60px;--r:10px;--rl:14px
+}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(5,217,164,0.04) 0%,transparent 55%),radial-gradient(ellipse at 85% 100%,rgba(107,127,215,0.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+#app{display:flex;height:100vh;position:relative;z-index:1}
+
+/* SIDEBAR */
+#sidebar{width:var(--sw);background:var(--bg1);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative}
+#sidebar::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+.s-logo{padding:20px 16px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.s-mark{width:34px;height:34px;background:var(--tealdim);border:1px solid var(--borderact);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:var(--teal);letter-spacing:-0.5px;flex-shrink:0}
+.s-text strong{font-family:'Syne',sans-serif;font-weight:700;font-size:14.5px;color:var(--t1);display:block;letter-spacing:-0.3px}
+.s-text span{font-size:9.5px;color:var(--t3);letter-spacing:0.6px;text-transform:uppercase}
+.s-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto}
+.s-label{font-size:9px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;padding:10px 10px 5px}
+.ni{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;cursor:pointer;transition:all .15s;color:var(--t2);font-size:13px;font-weight:400;position:relative;user-select:none}
+.ni:hover{background:var(--bg3);color:var(--t1)}
+.ni.active{background:var(--tealdim);color:var(--teal);font-weight:500}
+.ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:16px;background:var(--teal);border-radius:0 3px 3px 0}
+.ni svg{width:15px;height:15px;flex-shrink:0}
+.ni-badge{margin-left:auto;background:var(--red);color:#fff;font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:999px;min-width:17px;text-align:center}
+.ni-badge.am{background:var(--amber);color:#000}
+.s-foot{padding:10px 8px;border-top:1px solid var(--border)}
+.u-card{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;cursor:pointer;transition:background .15s}
+.u-card:hover{background:var(--bg3)}
+.u-av{width:30px;height:30px;border-radius:7px;background:var(--tealdim);border:1px solid var(--borderact);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;color:var(--teal);flex-shrink:0}
+.u-name{font-size:12px;font-weight:500;color:var(--t1)}
+.u-role{font-size:10px;color:var(--teal);display:flex;align-items:center;gap:3px;margin-top:1px}
+
+/* MAIN */
+#main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+#header{height:var(--hh);background:var(--bg1);border-bottom:1px solid var(--border);padding:0 22px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.h-title{flex:1}
+.h-title h1{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:var(--t1);letter-spacing:-0.3px}
+.h-title p{font-size:11px;color:var(--t2);margin-top:1px}
+.h-actions{display:flex;align-items:center;gap:7px}
+.h-clock{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--t2);background:var(--bg2);border:1px solid var(--border);padding:4px 9px;border-radius:6px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:7px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;transition:all .15s}
+.btn svg{width:13px;height:13px}
+.btn-teal{background:var(--teal);color:#000}
+.btn-teal:hover{background:#04c496;box-shadow:var(--tealglow)}
+.btn-ghost{background:transparent;color:var(--t2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg3);color:var(--t1)}
+#content{flex:1;overflow-y:auto;padding:20px}
+#content::-webkit-scrollbar{width:4px}
+#content::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
+
+/* ANIMATIONS */
+.sec{animation:fadeUp .22s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARD */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:18px}
+.card-t{font-family:'Syne',sans-serif;font-size:11.5px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+
+/* STATS */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.sc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:14px 16px;display:flex;flex-direction:column;gap:7px;transition:border-color .2s;cursor:default}
+.sc:hover{border-color:var(--borderact)}
+.s-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.s-icon svg{width:15px;height:15px}
+.s-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:700;color:var(--t1);letter-spacing:-1.5px;line-height:1}
+.s-lbl{font-size:11px;color:var(--t2)}
+.s-sub{font-size:10px;color:var(--t3)}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+/* WEEK STRIP */
+.ws{display:flex;gap:6px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:12px 16px;margin-bottom:16px}
+.wd{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 4px;border-radius:8px;cursor:pointer;transition:background .15s}
+.wd:hover{background:var(--bg3)}
+.wd.today{background:var(--tealdim)}
+.wd.today .wdn{color:var(--teal)}
+.wdl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--t3)}
+.wdn{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--t2)}
+.wdd{display:flex;gap:3px}
+.dot{width:5px;height:5px;border-radius:50%}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:500;white-space:nowrap}
+.bt{background:var(--tealdim);color:var(--teal)}
+.ba{background:var(--amberdim);color:var(--amber)}
+.br{background:var(--reddim);color:var(--red)}
+.bi{background:var(--indigodim);color:var(--indigo)}
+.bg2{background:var(--greendim);color:var(--green)}
+.bgr{background:var(--bg3);color:var(--t2)}
+
+/* AVATAR */
+.av{display:inline-flex;align-items:center;justify-content:center;border-radius:6px;font-family:'Syne',sans-serif;font-weight:700;flex-shrink:0}
+.av-sm{width:20px;height:20px;font-size:8.5px;border-radius:5px}
+.av-md{width:26px;height:26px;font-size:10px;border-radius:7px}
+.av-lg{width:36px;height:36px;font-size:14px;border-radius:9px}
+
+/* TASK ITEM */
+.ti{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--border)}
+.ti:last-child{border-bottom:none}
+.tck{width:17px;height:17px;border-radius:5px;border:1.5px solid var(--borderact);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.tck.done{background:var(--teal);border-color:var(--teal)}
+.tck.done svg{width:9px;height:9px;color:#000}
+.tt{font-size:13px;color:var(--t1);line-height:1.4}
+.tt.done{text-decoration:line-through;color:var(--t3)}
+.tm{display:flex;align-items:center;gap:7px;margin-top:4px;flex-wrap:wrap}
+
+/* PATIENT CARDS */
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.pc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:15px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.pc:hover{border-color:var(--borderact);transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,0,0,.35)}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--rl) var(--rl) 0 0}
+.pc.internado::before{background:var(--teal)}
+.pc.ambulatorio::before{background:var(--indigo)}
+.pc.alta::before{background:var(--green)}
+.pc.guardia::before{background:var(--amber)}
+.pid{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--t3);letter-spacing:.4px}
+.pdiag{font-size:13px;font-weight:500;color:var(--t1);margin:5px 0;line-height:1.4}
+.pfoot{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+
+/* MODAL */
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);animation:fadeIn .18s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--bg1);border:1px solid var(--border);border-radius:var(--rl);width:580px;max-width:95vw;max-height:85vh;overflow-y:auto;animation:sUp .22s ease}
+@keyframes sUp{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal::-webkit-scrollbar{width:4px}
+.modal::-webkit-scrollbar-thumb{background:var(--bg4)}
+.mh{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.mb{padding:18px 22px}
+.cbtn{background:none;border:none;color:var(--t2);cursor:pointer;padding:4px;border-radius:5px;transition:all .15s;display:flex}
+.cbtn:hover{background:var(--bg3);color:var(--t1)}
+
+/* EVOLUTION TIMELINE */
+.etl{position:relative;padding-left:22px}
+.etl::before{content:'';position:absolute;left:6px;top:8px;bottom:8px;width:1px;background:var(--border)}
+.ee{position:relative;margin-bottom:18px}
+.ee::before{content:'';position:absolute;left:-19px;top:6px;width:8px;height:8px;background:var(--teal);border-radius:50%;border:2px solid var(--bg1)}
+.ed{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--teal);margin-bottom:5px}
+.etxt{font-size:12.5px;color:var(--t1);line-height:1.6;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.eau{font-size:10px;color:var(--t3);margin-top:4px}
+
+/* KANBAN */
+.kb{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:start}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:12px}
+.kh{display:flex;align-items:center;gap:7px;margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.kht{font-size:11.5px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;flex:1}
+.khc{font-size:10px;background:var(--bg3);color:var(--t3);padding:2px 7px;border-radius:999px}
+.kcard{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:11px;margin-bottom:7px;cursor:pointer;transition:all .15s}
+.kcard:hover{border-color:var(--borderact);transform:translateY(-1px)}
+.kct{font-size:12.5px;color:var(--t1);line-height:1.4;margin-bottom:7px}
+.kcf{display:flex;align-items:center;justify-content:space-between}
+
+/* CALENDAR */
+.cg{display:grid;grid-template-columns:1fr 290px;gap:10px}
+.cm{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:18px}
+.cnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cmn{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--t1)}
+.cnbtn{background:var(--bg3);border:1px solid var(--border);color:var(--t2);width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.cnbtn:hover{background:var(--bg4);color:var(--t1)}
+.cwk{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;margin-bottom:3px}
+.cwkd{text-align:center;font-size:9.5px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;padding:3px 0}
+.cdays{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}
+.cday{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:7px;cursor:pointer;transition:background .12s}
+.cday:hover{background:var(--bg3)}
+.cday.today{background:var(--tealdim)}
+.cday.today .cdnum{color:var(--teal);font-weight:700}
+.cday.om .cdnum{color:var(--t3)}
+.cdnum{font-family:'Syne',sans-serif;font-size:12.5px;color:var(--t2)}
+.cdevs{display:flex;gap:2px}
+
+/* EVENTS */
+.ei{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--border)}
+.ei:last-child{border-bottom:none}
+.eidb{width:38px;flex-shrink:0;text-align:center}
+.eid{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--t1);line-height:1}
+.eim{font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:var(--t3)}
+.eii{flex:1}
+.eit{font-size:13px;font-weight:500;color:var(--t1)}
+.eid2{font-size:10.5px;color:var(--t2);margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+/* ACADEMIA */
+.tabs{display:flex;gap:3px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:3px;margin-bottom:14px;width:fit-content}
+.tab{padding:6px 14px;border-radius:7px;font-size:12.5px;font-weight:500;cursor:pointer;transition:all .15s;color:var(--t2)}
+.tab:hover{color:var(--t1)}
+.tab.active{background:var(--bg3);color:var(--t1)}
+.ri{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.ri:last-child{border-bottom:none}
+.ricon{width:34px;height:34px;background:var(--indigodim);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ricon svg{width:15px;height:15px;color:var(--indigo)}
+.rt{font-size:13px;font-weight:500;color:var(--t1);line-height:1.4}
+.rm{font-size:10.5px;color:var(--t2);margin-top:2px}
+
+/* FILTER BAR */
+.fb{display:flex;gap:7px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
+.si{flex:1;min-width:160px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:7px 13px;font-size:12.5px;color:var(--t1);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s}
+.si:focus{border-color:var(--borderact)}
+.si::placeholder{color:var(--t3)}
+.fp{padding:5px 13px;background:var(--bg2);border:1px solid var(--border);border-radius:999px;font-size:11.5px;color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap;user-select:none}
+.fp:hover{border-color:var(--borderact);color:var(--teal)}
+.fp.active{background:var(--tealdim);border-color:var(--borderact);color:var(--teal)}
+.rchip{display:flex;align-items:center;gap:6px;padding:4px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:999px;cursor:pointer;transition:all .15s;font-size:11.5px;color:var(--t2);user-select:none}
+.rchip:hover{border-color:var(--borderact)}
+.rchip.active{border-color:var(--borderact);color:var(--t1)}
+.divider{height:1px;background:var(--border);margin:14px 0}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--bg2);border:1px solid var(--borderact);border-radius:10px;padding:11px 15px;font-size:12.5px;color:var(--t1);z-index:999;animation:fadeUp .2s ease;display:flex;gap:8px;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,.5)}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.sg{grid-template-columns:repeat(2,1fr)}.kb{grid-template-columns:1fr}.cg{grid-template-columns:1fr}}
+@media(max-width:720px){:root{--sw:56px}.ni span,.s-text,.u-info,.s-label,.ni-badge{display:none}.s-mark{margin:0 auto}}
+*{scrollbar-width:thin;scrollbar-color:var(--bg4) transparent}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="main">
+    <header id="header"></header>
+    <main id="content"></main>
+  </div>
+</div>
+<div id="modal-root"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const R = [
+  {id:1,name:'García',full:'Dr. García',i:'G',c:'#05D9A4',bg:'rgba(5,217,164,.12)'},
+  {id:2,name:'López',full:'Dr. López',i:'L',c:'#F0A500',bg:'rgba(240,165,0,.12)'},
+  {id:3,name:'Martínez',full:'Dra. Martínez',i:'M',c:'#8B5CF6',bg:'rgba(139,92,246,.12)'},
+  {id:4,name:'Rodríguez',full:'Dr. Rodríguez',i:'R',c:'#E84C4C',bg:'rgba(232,76,76,.12)'},
+  {id:5,name:'Sánchez',full:'Dra. Sánchez',i:'S',c:'#6B7FD7',bg:'rgba(107,127,215,.12)'},
+];
+
+const PATIENTS = [
+  {id:'PAC-001',age:67,sex:'M',sector:'Sala 3 — Cama 12',status:'internado',diagnosis:'ACV isquémico territorio ACM derecha',assignedTo:[1,3],evolutions:[
+    {date:'2026-03-19',author:1,text:'Paciente hemodinámicamente estable. Sin nuevos déficits. TC control sin cambios. Continúa con anticoagulación profiláctica. Plan: RMN con DWI.'},
+    {date:'2026-03-20',author:3,text:'RMN informa infarto agudo fronto-parietal derecho sin transformación hemorrágica. Se inicia antiagregación con AAS 100mg.'},
+    {date:'2026-03-21',author:1,text:'Mejoría clínica leve. Hemiparesia izquierda 3/5 proximal. Lenguaje conservado. Interconsulta con kinesiología solicitada.'},
+  ]},
+  {id:'PAC-002',age:45,sex:'F',sector:'Consultorios — Ambulatorio',status:'ambulatorio',diagnosis:'Esclerosis Múltiple RR — brote motor activo',assignedTo:[2],evolutions:[
+    {date:'2026-03-15',author:2,text:'Debilidad progresiva en MMII desde hace 10 días. EDSS basal 2.0. Se indica pulsos de metilprednisolona x3 días.'},
+    {date:'2026-03-18',author:2,text:'Post-pulsos: leve mejoría subjetiva. Fuerza 4/5 distal. RMN: nueva lesión T2 cordón lateral. Control en 1 mes.'},
+  ]},
+  {id:'PAC-003',age:72,sex:'M',sector:'Sala 5 — Cama 3',status:'internado',diagnosis:'Epilepsia de difícil control — estado postcrítico',assignedTo:[4,5],evolutions:[
+    {date:'2026-03-20',author:4,text:'Ingresa por crisis tónico-clónica generalizada de 3 minutos. Sin recuperación completa. EEG: actividad epileptiforme bilateral.'},
+    {date:'2026-03-21',author:5,text:'Mayor lucidez. Responde órdenes simples. Se optimiza dosis de ácido valproico. Aguarda nivel sérico.'},
+  ]},
+  {id:'PAC-004',age:58,sex:'F',sector:'Guardia — UC',status:'guardia',diagnosis:'Cefalea en trueno — a descartar HSA',assignedTo:[3],evolutions:[
+    {date:'2026-03-21',author:3,text:'Ingresa por cefalea de inicio explosivo. TC sin hemorragia subaracnoidea visible. PL: xantocromía positiva. Se interna para estudio y monitoreo neurológico.'},
+  ]},
+  {id:'PAC-005',age:34,sex:'M',sector:'Alta domiciliaria',status:'alta',diagnosis:'Síndrome de Guillain-Barré en resolución',assignedTo:[1],evolutions:[
+    {date:'2026-03-10',author:1,text:'Alta hospitalaria luego de 18 días. IVIG completo. Fuerza 4/5 en MMII. Continúa kinesiología domiciliaria.'},
+    {date:'2026-03-17',author:1,text:'Control ambulatorio: mejoría sostenida. Fuerza 4+/5. Deambula con apoyo. Sin disfagia. Próximo control en 2 semanas.'},
+  ]},
+  {id:'PAC-006',age:81,sex:'F',sector:'Sala 2 — Cama 7',status:'internado',diagnosis:'Enfermedad de Alzheimer — síntomas conductuales',assignedTo:[2,4],evolutions:[
+    {date:'2026-03-18',author:2,text:'Agitación nocturna severa. Ajuste de quetiapina 25mg noche. Familiar informado de cambios esperados.'},
+    {date:'2026-03-21',author:4,text:'Mejoría del patrón de sueño. Menor agitación según reporte de enfermería. MMSE: 14/30.'},
+  ]},
+];
+
+const TASKS = [
+  {id:1,title:'Presentar caso ACV en ateneo semanal',assignedTo:2,status:'pendiente',priority:'alta',due:'2026-03-24',type:'presentacion'},
+  {id:2,title:'Completar evoluciones PAC-003 pendientes',assignedTo:5,status:'pendiente',priority:'alta',due:'2026-03-21',type:'clinica'},
+  {id:3,title:'Revisar protocolo anticoagulación post-ACV',assignedTo:1,status:'en_curso',priority:'media',due:'2026-03-25',type:'academica'},
+  {id:4,title:'Preparar clase diagnóstico de EM — criterios McDonald',assignedTo:3,status:'en_curso',priority:'media',due:'2026-03-28',type:'clase'},
+  {id:5,title:'Interconsulta neuropsicología PAC-006',assignedTo:4,status:'en_curso',priority:'baja',due:'2026-03-22',type:'clinica'},
+  {id:6,title:'Leer artículo: NEJM — Stroke 2025 Guidelines',assignedTo:1,status:'completada',priority:'media',due:'2026-03-18',type:'academica'},
+  {id:7,title:'Registrar guardias de la semana',assignedTo:2,status:'completada',priority:'baja',due:'2026-03-17',type:'admin'},
+  {id:8,title:'Actualizar ficha PAC-002 con nueva RMN',assignedTo:3,status:'pendiente',priority:'alta',due:'2026-03-22',type:'clinica'},
+];
+
+const EVENTS = [
+  {id:1,title:'Ateneo Semanal',date:'2026-03-24',time:'09:00',type:'ateneo',loc:'Aula Magna',presenter:2,desc:'Presentación de casos clínicos. Dr. López: ACV en paciente joven.'},
+  {id:2,title:'Clase: Criterios McDonald 2024',date:'2026-03-26',time:'14:00',type:'clase',loc:'Sala de Docencia',presenter:3,desc:'Diagnóstico actualizado de Esclerosis Múltiple. Dra. Martínez.'},
+  {id:3,title:'Guardia — García + Rodríguez',date:'2026-03-22',time:'08:00',type:'guardia',loc:'Guardia Central',presenter:null,desc:'Guardia de 24 horas.'},
+  {id:4,title:'Guardia — López + Sánchez',date:'2026-03-25',time:'08:00',type:'guardia',loc:'Guardia Central',presenter:null,desc:'Guardia de 24 horas.'},
+  {id:5,title:'Discusión de Trabajo — Biomarcadores LCR',date:'2026-03-28',time:'11:00',type:'presentacion',loc:'Sala de Reuniones',presenter:5,desc:'Dra. Sánchez presenta avances de trabajo de investigación.'},
+  {id:6,title:'Ateneo Semanal',date:'2026-03-31',time:'09:00',type:'ateneo',loc:'Aula Magna',presenter:null,desc:'Caso clínico a definir.'},
+  {id:7,title:'Guardia — Martínez + Sánchez',date:'2026-03-29',time:'08:00',type:'guardia',loc:'Guardia Central',presenter:null,desc:'Guardia de 24 horas.'},
+];
+
+const READINGS = [
+  {id:1,title:'Stroke Guidelines 2025 — AHA/ASA',journal:'Stroke, 2025',type:'guia',assignedTo:[1,2,3,4,5],mandatory:true},
+  {id:2,title:'McDonald Criteria 2024 Update for MS Diagnosis',journal:'Annals of Neurology, 2024',type:'articulo',assignedTo:[1,3,5],mandatory:true},
+  {id:3,title:'IVIG vs Plasmapheresis in GBS: Meta-analysis',journal:'NEJM, 2024',type:'articulo',assignedTo:[1,4],mandatory:false},
+  {id:4,title:'Guía de Epilepsia Refractaria ILAE 2024',journal:'Epilepsia, 2024',type:'guia',assignedTo:[4,5],mandatory:true},
+  {id:5,title:'Biomarkers in Alzheimer Disease: Current Evidence',journal:'Lancet Neurology, 2025',type:'revision',assignedTo:[2,3],mandatory:false},
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const S = {section:'dashboard',taskFilter:'all',patFilter:'all',acadTab:'lecturas',calOff:0};
+const TODAY = new Date(2026,2,21);
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+const res = id => R.find(r=>r.id===id);
+
+function av(id,cls='av-md'){
+  const r=res(id); if(!r) return '';
+  return `<span class="av ${cls}" style="background:${r.bg};color:${r.c}">${r.i}</span>`;
+}
+
+function prio(p){
+  const m={alta:'br Alta',media:'ba Media',baja:'bgr Baja'};
+  const [c,l]=m[p].split(' ');
+  return `<span class="badge ${c}">${l}</span>`;
+}
+
+function sbadge(s){
+  const m={internado:'bt Internado',ambulatorio:'bi Ambulatorio',alta:'bg2 Alta',guardia:'ba Guardia',
+           pendiente:'ba Pendiente',en_curso:'bi En curso',completada:'bg2 Completada'};
+  const [c,...l]=(m[s]||'bgr '+s).split(' ');
+  return `<span class="badge ${c}">${l.join(' ')}</span>`;
+}
+
+function tbadge(t){
+  const m={ateneo:'bt Ateneo',clase:'bi Clase',guardia:'ba Guardia',presentacion:'br Presentación'};
+  const [c,...l]=(m[t]||'bgr '+t).split(' ');
+  return `<span class="badge ${c}">${l.join(' ')}</span>`;
+}
+
+function fdate(d){
+  const [,m,day]=d.split('-');
+  const ms=['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${parseInt(day)} ${ms[parseInt(m)]}`;
+}
+
+function dow(d){return['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][new Date(d).getDay()]}
+
+function ecolor(t){return{ateneo:'#05D9A4',clase:'#6B7FD7',guardia:'#F0A500',presentacion:'#E84C4C'}[t]||'#3D4459'}
+
+function toast(msg){
+  const t=document.createElement('div');
+  t.className='toast';
+  t.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#05D9A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ${msg}`;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2800);
+}
+
+// ── SIDEBAR ───────────────────────────────────────────────────────────────────
+function renderSidebar(){
+  const nav=[
+    {id:'dashboard',icon:'layout-dashboard',label:'Dashboard'},
+    {id:'pacientes',icon:'users',label:'Pacientes',badge:PATIENTS.filter(p=>p.status==='internado'||p.status==='guardia').length},
+    {id:'tareas',icon:'check-square',label:'Tareas',badge:TASKS.filter(t=>t.status==='pendiente').length,red:true},
+    {id:'calendario',icon:'calendar',label:'Calendario'},
+    {id:'academia',icon:'book-open',label:'Academia',badge:READINGS.filter(r=>r.mandatory).length,am:true},
+  ];
+  document.getElementById('sidebar').innerHTML=`
+    <div class="s-logo">
+      <div class="s-mark">HJ</div>
+      <div class="s-text"><strong>HubJr</strong><span>Residencia · v3</span></div>
+    </div>
+    <nav class="s-nav">
+      <div class="s-label">Principal</div>
+      ${nav.map(n=>`
+        <div class="ni${S.section===n.id?' active':''}" data-nav="${n.id}">
+          <i data-lucide="${n.icon}"></i>
+          <span>${n.label}</span>
+          ${n.badge?`<span class="ni-badge${n.am?' am':''}">${n.badge}</span>`:''}
+        </div>`).join('')}
+    </nav>
+    <div class="s-foot">
+      <div class="u-card">
+        <div class="u-av">JF</div>
+        <div>
+          <div class="u-name">Dr. Jutopa</div>
+          <div class="u-role"><i data-lucide="shield" style="width:9px;height:9px"></i> Jefe de Residentes</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── HEADER ────────────────────────────────────────────────────────────────────
+const META={
+  dashboard:{t:'Dashboard',s:'Resumen semanal de la residencia'},
+  pacientes:{t:'Pacientes',s:'Seguimiento clínico activo'},
+  tareas:{t:'Tareas',s:'Gestión de obligaciones del equipo'},
+  calendario:{t:'Calendario',s:'Agenda de la residencia'},
+  academia:{t:'Academia',s:'Lecturas, clases y presentaciones'},
+};
+
+function renderHeader(){
+  const m=META[S.section];
+  const btns={
+    tareas:`<button class="btn btn-teal" id="h-btn"><i data-lucide="plus"></i> Nueva tarea</button>`,
+    pacientes:`<button class="btn btn-teal" id="h-btn"><i data-lucide="user-plus"></i> Agregar paciente</button>`,
+    calendario:`<button class="btn btn-teal" id="h-btn"><i data-lucide="calendar-plus"></i> Nuevo evento</button>`,
+    academia:`<button class="btn btn-teal" id="h-btn"><i data-lucide="plus"></i> Agregar material</button>`,
+  };
+  document.getElementById('header').innerHTML=`
+    <div class="h-title"><h1>${m.t}</h1><p>${m.s}</p></div>
+    <div class="h-actions">
+      <span class="h-clock" id="clk">${new Date().toTimeString().slice(0,5)}</span>
+      ${btns[S.section]||''}
+    </div>`;
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────────────────
+function renderDashboard(){
+  const internados=PATIENTS.filter(p=>p.status==='internado').length;
+  const pending=TASKS.filter(t=>t.status==='pendiente').length;
+  const next=EVENTS.filter(e=>e.date>='2026-03-21').sort((a,b)=>a.date.localeCompare(b.date))[0];
+
+  // week strip
+  const ws=new Date(TODAY); ws.setDate(TODAY.getDate()-((TODAY.getDay()||7)-1));
+  const days=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+  const wHTML=Array.from({length:7},(_,i)=>{
+    const d=new Date(ws); d.setDate(ws.getDate()+i);
+    const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const evs=EVENTS.filter(e=>e.date===ds);
+    const isT=d.toDateString()===TODAY.toDateString();
+    return `<div class="wd${isT?' today':''}">
+      <span class="wdl">${days[i]}</span>
+      <span class="wdn">${d.getDate()}</span>
+      <div class="wdd">${evs.map(e=>`<span class="dot" style="background:${ecolor(e.type)}"></span>`).join('')}</div>
+    </div>`;
+  }).join('');
+
+  // tasks
+  const tHTML=TASKS.filter(t=>t.status!=='completada').slice(0,4).map(t=>{
+    const r=res(t.assignedTo);
+    return `<div class="ti">
+      <div class="tck${t.status==='completada'?' done':''}">
+        ${t.status==='completada'?'<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':''}
+      </div>
+      <div style="flex:1">
+        <div class="tt${t.status==='completada'?' done':''}">${t.title}</div>
+        <div class="tm">
+          ${r?av(r.id,'av-sm')+'<span style="font-size:10.5px;color:var(--t2)">'+r.name+'</span>':''}
+          <span style="margin-left:auto">${prio(t.priority)}</span>
+          <span style="font-size:10.5px;color:var(--t3)">${fdate(t.due)}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // events
+  const eHTML=EVENTS.filter(e=>e.date>='2026-03-21').sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4).map(e=>{
+    const [,m,d]=e.date.split('-');
+    const ms=['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return `<div class="ei">
+      <div class="eidb"><div class="eid">${parseInt(d)}</div><div class="eim">${ms[parseInt(m)]}</div></div>
+      <div class="eii">
+        <div class="eit">${e.title}</div>
+        <div class="eid2">${tbadge(e.type)}<span style="font-size:10.5px;color:var(--t3)">${e.time} · ${e.loc}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // residents
+  const resHTML=R.map(r=>{
+    const act=TASKS.filter(t=>t.assignedTo===r.id&&t.status!=='completada').length;
+    const pts=PATIENTS.filter(p=>p.assignedTo.includes(r.id)).length;
+    const ng=EVENTS.filter(e=>e.type==='guardia'&&e.date>='2026-03-21'&&e.title.includes(r.name)).sort((a,b)=>a.date.localeCompare(b.date))[0];
+    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
+      ${av(r.id,'av-lg')}
+      <div style="flex:1">
+        <div style="font-size:12.5px;font-weight:500;color:var(--t1)">${r.full}</div>
+        <div style="font-size:10.5px;color:var(--t2);margin-top:2px">${pts} pac. · ${act} tareas activas</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:var(--t3)">Próx. guardia</div>
+        <div style="font-size:11px;color:var(--t2);font-weight:500">${ng?fdate(ng.date):'—'}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="sec">
+    <div class="ws">${wHTML}</div>
+    <div class="sg">
+      <div class="sc"><div class="s-icon" style="background:var(--tealdim)"><i data-lucide="bed" style="color:var(--teal)"></i></div><div class="s-val">${internados}</div><div class="s-lbl">Internados</div><div class="s-sub">${PATIENTS.filter(p=>p.status==='guardia').length} en guardia</div></div>
+      <div class="sc"><div class="s-icon" style="background:var(--amberdim)"><i data-lucide="check-square" style="color:var(--amber)"></i></div><div class="s-val">${pending}</div><div class="s-lbl">Tareas pendientes</div><div class="s-sub">${TASKS.filter(t=>t.status==='en_curso').length} en curso</div></div>
+      <div class="sc"><div class="s-icon" style="background:var(--indigodim)"><i data-lucide="calendar" style="color:var(--indigo)"></i></div><div class="s-val">${next?parseInt(next.date.split('-')[2]):'—'}</div><div class="s-lbl">Próx. evento</div><div class="s-sub">${next?next.title.slice(0,22)+'…':'Sin eventos'}</div></div>
+      <div class="sc"><div class="s-icon" style="background:var(--reddim)"><i data-lucide="book-open" style="color:var(--red)"></i></div><div class="s-val">${READINGS.filter(r=>r.mandatory).length}</div><div class="s-lbl">Lecturas oblig.</div><div class="s-sub">Esta semana</div></div>
+    </div>
+    <div class="g2">
+      <div class="card"><div class="card-t">Tareas activas <span class="badge ba">${pending} pendientes</span></div>${tHTML}
+        <div style="margin-top:10px"><button class="btn btn-ghost" style="width:100%;justify-content:center;font-size:11.5px" data-nav="tareas">Ver todas →</button></div>
+      </div>
+      <div class="card"><div class="card-t">Próximos eventos</div>${eHTML}</div>
+    </div>
+    <div class="card" style="margin-top:10px"><div class="card-t">Estado del equipo</div>${resHTML}</div>
+  </div>`;
+}
+
+// ── PACIENTES ─────────────────────────────────────────────────────────────────
+function renderPacientes(){
+  const sts=['all','internado','ambulatorio','guardia','alta'];
+  const ls={all:'Todos',internado:'Internados',ambulatorio:'Ambulatorios',guardia:'Guardia',alta:'Alta'};
+  const fil=S.patFilter==='all'?PATIENTS:PATIENTS.filter(p=>p.status===S.patFilter);
+  return `<div class="sec">
+    <div class="fb">
+      <input class="si" placeholder="Buscar por ID o diagnóstico…" id="psearch">
+      ${sts.map(s=>`<span class="fp${S.patFilter===s?' active':''}" data-pf="${s}">${ls[s]}</span>`).join('')}
+    </div>
+    <div class="sh"><span style="font-size:12px;color:var(--t2)">${fil.length} paciente${fil.length!==1?'s':''}</span></div>
+    <div class="pg">${fil.map(p=>`
+      <div class="pc ${p.status}" data-pid="${p.id}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px">
+          <span class="pid">${p.id}</span>${sbadge(p.status)}
+        </div>
+        <div class="pdiag">${p.diagnosis}</div>
+        <div style="font-size:11px;color:var(--t2);margin-bottom:9px">${p.age} años · ${p.sex==='M'?'Masc.':'Fem.'} · ${p.sector}</div>
+        <div class="pfoot">
+          <div style="display:flex;gap:3px">${p.assignedTo.map(id=>av(id,'av-sm')).join('')}</div>
+          <span style="font-size:10px;color:var(--t3);display:flex;align-items:center;gap:3px">
+            <i data-lucide="file-text" style="width:10px;height:10px"></i>${p.evolutions.length} evo.
+          </span>
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function showPModal(pid){
+  const p=PATIENTS.find(x=>x.id===pid); if(!p) return;
+  const evos=[...p.evolutions].reverse().map(e=>{
+    const r=res(e.author);
+    return `<div class="ee">
+      <div class="ed">${e.date} — ${dow(e.date)}</div>
+      <div class="etxt">${e.text}</div>
+      <div class="eau">Registrado por ${r?r.full:'Sistema'}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('modal-root').innerHTML=`
+    <div class="mov" id="mov">
+      <div class="modal">
+        <div class="mh">
+          <div>
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px">
+              <span class="pid" style="font-size:12px">${p.id}</span>${sbadge(p.status)}
+            </div>
+            <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--t1);line-height:1.3">${p.diagnosis}</div>
+            <div style="font-size:11.5px;color:var(--t2);margin-top:3px">${p.age} años · ${p.sex==='M'?'Masculino':'Femenino'} · ${p.sector}</div>
+          </div>
+          <button class="cbtn" id="cmod"><i data-lucide="x" style="width:17px;height:17px"></i></button>
+        </div>
+        <div class="mb">
+          <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:8px">Equipo a cargo</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+            ${p.assignedTo.map(id=>{const r=res(id);return r?`<div style="display:flex;align-items:center;gap:6px">${av(id)}<span style="font-size:12px;color:var(--t2)">${r.full}</span></div>`:''}).join('')}
+          </div>
+          <div class="divider"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;font-weight:600">Evoluciones (${p.evolutions.length})</div>
+            <button class="btn btn-teal" style="padding:4px 11px;font-size:11px" onclick="toast('Función disponible en versión completa')">
+              <i data-lucide="plus" style="width:11px;height:11px"></i> Nueva
+            </button>
+          </div>
+          <div class="etl">${evos}</div>
+        </div>
+      </div>
+    </div>`;
+  lucide.createIcons();
+  document.getElementById('mov').addEventListener('click',e=>{if(e.target===document.getElementById('mov'))closeMod()});
+  document.getElementById('cmod').addEventListener('click',closeMod);
+}
+function closeMod(){document.getElementById('modal-root').innerHTML=''}
+
+// ── TAREAS ────────────────────────────────────────────────────────────────────
+function renderTareas(){
+  const tl={clinica:'Clínica',academica:'Académica',presentacion:'Presentación',clase:'Clase',admin:'Admin'};
+  const cols=['pendiente','en_curso','completada'];
+  const cl={pendiente:'var(--amber)',en_curso:'var(--indigo)',completada:'var(--green)'};
+  const lb={pendiente:'Pendiente',en_curso:'En curso',completada:'Completada'};
+
+  const rchips=`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px">
+    <span class="rchip${S.taskFilter==='all'?' active':''}" data-tf="all">Todos</span>
+    ${R.map(r=>`<span class="rchip${S.taskFilter==r.id?' active':''}" data-tf="${r.id}">${av(r.id,'av-sm')} ${r.name}</span>`).join('')}
+  </div>`;
+
+  const kHTML=cols.map(st=>{
+    let fil=TASKS.filter(t=>t.status===st);
+    if(S.taskFilter!=='all') fil=fil.filter(t=>t.assignedTo==S.taskFilter);
+    return `<div class="kc">
+      <div class="kh">
+        <span style="width:7px;height:7px;border-radius:50%;background:${cl[st]};flex-shrink:0;display:inline-block"></span>
+        <span class="kht">${lb[st]}</span><span class="khc">${fil.length}</span>
+      </div>
+      ${fil.map(t=>{const r=res(t.assignedTo);return `
+        <div class="kcard">
+          <div class="kct">${t.title}</div>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px">${prio(t.priority)}<span class="badge bgr">${tl[t.type]||t.type}</span></div>
+          <div class="kcf">
+            <div style="display:flex;align-items:center;gap:5px">${r?av(r.id,'av-sm')+'<span style="font-size:10.5px;color:var(--t2)">'+r.name+'</span>':''}</div>
+            <span style="font-size:10px;color:var(--t3);font-family:'JetBrains Mono',monospace">${fdate(t.due)}</span>
+          </div>
+        </div>`;}).join('')||'<div style="text-align:center;padding:20px;color:var(--t3);font-size:11.5px">Sin tareas</div>'}
+    </div>`;
+  }).join('');
+
+  return `<div class="sec">${rchips}<div class="kb">${kHTML}</div></div>`;
+}
+
+// ── CALENDARIO ────────────────────────────────────────────────────────────────
+function renderCalendario(){
+  const cd=new Date(TODAY.getFullYear(),TODAY.getMonth()+S.calOff,1);
+  const y=cd.getFullYear(),mo=cd.getMonth();
+  const mns=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const fd=cd.getDay(),dim=new Date(y,mo+1,0).getDate(),dipm=new Date(y,mo,0).getDate();
+  const off=fd===0?6:fd-1;
+  const days=[];
+  for(let i=off-1;i>=0;i--) days.push({d:dipm-i,m:mo-1,y,o:true});
+  for(let i=1;i<=dim;i++) days.push({d:i,m:mo,y,o:false});
+  while(days.length%7!==0) days.push({d:days.length-dim-off+1,m:mo+1,y,o:true});
+
+  const dHTML=days.map(({d,m,y:dy,o})=>{
+    const ds=`${dy}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const evs=EVENTS.filter(e=>e.date===ds);
+    const isT=d===TODAY.getDate()&&m===TODAY.getMonth()&&dy===TODAY.getFullYear();
+    return `<div class="cday${isT?' today':''}${o?' om':''}">
+      <span class="cdnum">${d}</span>
+      <div class="cdevs">${evs.map(e=>`<span class="dot" style="background:${ecolor(e.type)}"></span>`).join('')}</div>
+    </div>`;
+  }).join('');
+
+  const upcoming=EVENTS.filter(e=>e.date>=`${y}-${String(mo+1).padStart(2,'0')}-01`).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,6);
+  const uHTML=upcoming.map(e=>{
+    const [,mm,dd]=e.date.split('-');
+    const ms=['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return `<div class="ei">
+      <div class="eidb"><div class="eid">${parseInt(dd)}</div><div class="eim">${ms[parseInt(mm)]}</div></div>
+      <div class="eii">
+        <div class="eit">${e.title}</div>
+        <div class="eid2">${tbadge(e.type)}<span style="font-size:10px;color:var(--t3)">${e.time} · ${e.loc}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const legend=['ateneo','clase','guardia','presentacion'].map(t=>{
+    const lb={ateneo:'Ateneo',clase:'Clase',guardia:'Guardia',presentacion:'Presentación'};
+    return `<div style="display:flex;align-items:center;gap:5px"><span class="dot" style="background:${ecolor(t)};width:7px;height:7px"></span><span style="font-size:10.5px;color:var(--t2)">${lb[t]}</span></div>`;
+  }).join('');
+
+  return `<div class="sec"><div class="cg">
+    <div class="cm">
+      <div class="cnav">
+        <div class="cnbtn" id="cprev"><i data-lucide="chevron-left" style="width:13px;height:13px"></i></div>
+        <span class="cmn">${mns[mo]} ${y}</span>
+        <div class="cnbtn" id="cnext"><i data-lucide="chevron-right" style="width:13px;height:13px"></i></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">${legend}</div>
+      <div class="cwk">${['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(d=>`<div class="cwkd">${d}</div>`).join('')}</div>
+      <div class="cdays">${dHTML}</div>
+    </div>
+    <div class="card"><div class="card-t">Próximos eventos</div>${uHTML}</div>
+  </div></div>`;
+}
+
+// ── ACADEMIA ──────────────────────────────────────────────────────────────────
+function renderAcademia(){
+  const tabs=[['lecturas','Lecturas'],['ateneos','Ateneos y Clases'],['presentaciones','Presentaciones']];
+  const tl={guia:'Guía',articulo:'Artículo',revision:'Revisión'};
+  const tc={guia:'bt',articulo:'bi',revision:'ba'};
+
+  let body='';
+  if(S.acadTab==='lecturas'){
+    body=READINGS.map(r=>`
+      <div class="ri">
+        <div class="ricon"><i data-lucide="file-text"></i></div>
+        <div style="flex:1">
+          <div class="rt">${r.title}</div>
+          <div class="rm">${r.journal}</div>
+          <div style="display:flex;align-items:center;gap:5px;margin-top:6px;flex-wrap:wrap">
+            <span class="badge ${tc[r.type]}">${tl[r.type]}</span>
+            ${r.mandatory?'<span class="badge br">Obligatorio</span>':''}
+            <div style="display:flex;gap:2px;margin-left:4px">${r.assignedTo.map(id=>av(id,'av-sm')).join('')}</div>
+          </div>
+        </div>
+        <button class="btn btn-ghost" style="padding:4px 9px;font-size:11px;align-self:flex-start" onclick="toast('Abriendo material…')">
+          <i data-lucide="external-link" style="width:11px;height:11px"></i>
+        </button>
+      </div>`).join('');
+  }
+
+  if(S.acadTab==='ateneos'){
+    const ms=['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    body=EVENTS.filter(e=>e.type==='ateneo'||e.type==='clase').sort((a,b)=>a.date.localeCompare(b.date)).map(e=>{
+      const pr=e.presenter?res(e.presenter):null;
+      const [,mm,dd]=e.date.split('-');
+      return `<div style="display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--border);align-items:flex-start">
+        <div style="width:44px;flex-shrink:0;background:var(--bg3);border-radius:8px;padding:7px 4px;text-align:center">
+          <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--t1);line-height:1">${parseInt(dd)}</div>
+          <div style="font-size:9px;color:var(--t3);text-transform:uppercase">${ms[parseInt(mm)]}</div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:13.5px;font-weight:500;color:var(--t1)">${e.title}</div>
+          <div style="font-size:11.5px;color:var(--t2);margin-top:3px">${e.desc}</div>
+          <div style="display:flex;align-items:center;gap:7px;margin-top:7px;flex-wrap:wrap">
+            ${tbadge(e.type)}<span style="font-size:10.5px;color:var(--t3)">${e.time} · ${e.loc}</span>
+            ${pr?`<div style="display:flex;align-items:center;gap:4px;margin-left:auto">${av(pr.id,'av-sm')}<span style="font-size:10.5px;color:var(--t2)">${pr.full}</span></div>`:''}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  if(S.acadTab==='presentaciones'){
+    const pres=EVENTS.filter(e=>e.type==='presentacion').sort((a,b)=>a.date.localeCompare(b.date));
+    const prep=TASKS.filter(t=>t.type==='presentacion'||t.type==='clase');
+    body=`
+      <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:10px">Presentaciones programadas</div>
+      ${pres.map(e=>{const pr=e.presenter?res(e.presenter):null;return `
+        <div style="display:flex;gap:12px;padding:12px;background:var(--bg3);border-radius:9px;margin-bottom:7px;align-items:flex-start">
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:500;color:var(--t1)">${e.title}</div>
+            <div style="font-size:11.5px;color:var(--t2);margin-top:3px">${e.desc}</div>
+            <div style="font-size:10.5px;color:var(--t3);margin-top:5px">${fdate(e.date)} · ${e.time} · ${e.loc}</div>
+          </div>
+          ${pr?`<div style="display:flex;flex-direction:column;align-items:center;gap:3px">${av(pr.id,'av-lg')}<span style="font-size:9.5px;color:var(--t3)">${pr.name}</span></div>`:''}
+        </div>`}).join('')}
+      <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin:16px 0 10px">En preparación</div>
+      ${prep.map(t=>{const r=res(t.assignedTo);return `
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg3);border-radius:8px;margin-bottom:6px">
+          ${r?av(r.id):''}
+          <div style="flex:1"><div style="font-size:12.5px;font-weight:500;color:var(--t1)">${t.title}</div>
+          <div style="font-size:10.5px;color:var(--t3);margin-top:2px">Vence ${fdate(t.due)}</div></div>
+          ${sbadge(t.status)}
+        </div>`}).join('')}`;
+  }
+
+  return `<div class="sec">
+    <div class="tabs">${tabs.map(([id,l])=>`<div class="tab${S.acadTab===id?' active':''}" data-at="${id}">${l}</div>`).join('')}</div>
+    <div class="card">${body}</div>
+  </div>`;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render(){
+  renderSidebar(); renderHeader();
+  const fn={dashboard:renderDashboard,pacientes:renderPacientes,tareas:renderTareas,calendario:renderCalendario,academia:renderAcademia};
+  document.getElementById('content').innerHTML=fn[S.section]();
+  lucide.createIcons();
+  attach();
+}
+
+// ── EVENTS ────────────────────────────────────────────────────────────────────
+function attach(){
+  document.querySelectorAll('[data-nav]').forEach(el=>el.addEventListener('click',()=>{S.section=el.dataset.nav;render()}));
+  document.querySelectorAll('[data-pf]').forEach(el=>el.addEventListener('click',()=>{S.patFilter=el.dataset.pf;render()}));
+  document.querySelectorAll('[data-pid]').forEach(el=>el.addEventListener('click',()=>showPModal(el.dataset.pid)));
+  document.querySelectorAll('[data-tf]').forEach(el=>el.addEventListener('click',()=>{S.taskFilter=el.dataset.tf;render()}));
+  document.querySelectorAll('[data-at]').forEach(el=>el.addEventListener('click',()=>{S.acadTab=el.dataset.at;render()}));
+  const cp=document.getElementById('cprev'),cn=document.getElementById('cnext');
+  if(cp) cp.addEventListener('click',()=>{S.calOff--;render()});
+  if(cn) cn.addEventListener('click',()=>{S.calOff++;render()});
+  const hb=document.getElementById('h-btn');
+  if(hb) hb.addEventListener('click',()=>toast('Función disponible en versión completa'));
+}
+
+// ── CLOCK ─────────────────────────────────────────────────────────────────────
+setInterval(()=>{const c=document.getElementById('clk');if(c)c.textContent=new Date().toTimeString().slice(0,5)},15000);
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',render);
+</script>
+</body>
+</html>
