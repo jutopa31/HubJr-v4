@@ -80,7 +80,7 @@ export function Calendar({ user: _user }: CalendarProps) {
             {LEGEND.map(l => (
               <div key={l.type} className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full" style={{ background: eventTypeColor[l.type] }} />
-                <span className="text-t3 text-[10px]">{l.label}</span>
+                <span className="text-t2 text-[11px]">{l.label}</span>
               </div>
             ))}
           </div>
@@ -91,7 +91,7 @@ export function Calendar({ user: _user }: CalendarProps) {
           {/* Day headers */}
           <div className="grid grid-cols-7" style={{ borderBottom: '1px solid var(--border)' }}>
             {DAY_NAMES.map(d => (
-              <div key={d} className="py-2 text-center text-t3 text-[10px] font-medium">{d}</div>
+              <div key={d} className="py-2 text-center text-t2 text-[11px] font-medium">{d}</div>
             ))}
           </div>
 
@@ -133,7 +133,7 @@ export function Calendar({ user: _user }: CalendarProps) {
                     {dayEvents.slice(0, 2).map(ev => (
                       <div
                         key={ev.id}
-                        className="text-[9px] px-1 py-0.5 rounded truncate leading-tight"
+                        className="text-[10px] px-1 py-0.5 rounded truncate leading-tight font-medium"
                         style={{ background: `${eventTypeColor[ev.type]}22`, color: eventTypeColor[ev.type] }}
                         title={ev.title}
                       >
@@ -141,7 +141,7 @@ export function Calendar({ user: _user }: CalendarProps) {
                       </div>
                     ))}
                     {dayEvents.length > 2 && (
-                      <div className="text-[9px] text-t3">+{dayEvents.length - 2} más</div>
+                      <div className="text-[10px] text-t2 font-medium">+{dayEvents.length - 2} más</div>
                     )}
                   </div>
                 </div>
@@ -167,7 +167,7 @@ export function Calendar({ user: _user }: CalendarProps) {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-1 text-t3 text-[10px]">
+              <div className="flex flex-col gap-1 text-t3 text-[11px] font-medium">
                 <div className="flex items-center gap-1">
                   <Clock size={9} />
                   {ev.date} · {ev.time}
@@ -180,10 +180,10 @@ export function Calendar({ user: _user }: CalendarProps) {
               {presenter && (
                 <div className="flex items-center gap-1.5 pt-1" style={{ borderTop: '1px solid var(--border)' }}>
                   <Avatar resident={presenter} size="sm" />
-                  <span className="text-t2 text-[10px]">{presenter.full}</span>
+                  <span className="text-t2 text-[11px]">{presenter.full}</span>
                 </div>
               )}
-              {ev.desc && <p className="text-t3 text-[10.5px] leading-relaxed">{ev.desc}</p>}
+              {ev.desc && <p className="text-t3 text-[11px] leading-relaxed">{ev.desc}</p>}
             </div>
           )
         })}

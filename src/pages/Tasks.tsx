@@ -126,7 +126,7 @@ export function Tasks({ user, showToast }: TasksProps) {
         </div>
 
         <div className="flex items-center justify-between">
-          <div className={`flex items-center gap-1 text-[10px] ${overdue ? 'text-red' : 'text-t3'}`}>
+          <div className={`flex items-center gap-1 text-[11px] font-medium ${overdue ? 'text-red' : 'text-t3'}`}>
             <Calendar size={10} />
             {task.due}
             {overdue && <span className="ml-0.5 font-medium">· Vencida</span>}
@@ -138,7 +138,7 @@ export function Tasks({ user, showToast }: TasksProps) {
           <button
             onClick={() => handleAdvance(task)}
             disabled={advancing}
-            className="flex items-center justify-center gap-1 w-full py-1 rounded-lg text-[10.5px] font-medium transition-all hover:opacity-80 active:scale-95 disabled:opacity-40"
+            className="flex items-center justify-center gap-1 w-full py-1 rounded-lg text-[12px] font-medium transition-all hover:opacity-80 active:scale-95 disabled:opacity-40"
             style={{ background: 'var(--bg1)', color: 'var(--t2)', border: '1px solid var(--border)' }}
           >
             {advancing ? '...' : (
@@ -179,7 +179,7 @@ export function Tasks({ user, showToast }: TasksProps) {
               }
             >
               <span
-                className="w-4 h-4 rounded flex items-center justify-center text-[8px] font-bold"
+                className="w-4 h-4 rounded flex items-center justify-center text-[11px] font-bold"
                 style={{ background: res.bg, color: res.color }}
               >
                 {res.initial}
@@ -211,7 +211,7 @@ export function Tasks({ user, showToast }: TasksProps) {
                 <div className="w-2 h-2 rounded-full" style={{ background: col.color }} />
                 <span className="font-syne font-semibold text-t1 text-[12px]">{col.label}</span>
                 <span
-                  className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                  className="ml-auto text-[11px] font-bold px-1.5 py-0.5 rounded-full"
                   style={{ background: `${col.color}20`, color: col.color }}
                 >
                   {colTasks.length}
@@ -224,7 +224,7 @@ export function Tasks({ user, showToast }: TasksProps) {
                   <TaskCard key={task.id} task={task} />
                 ))}
                 {colTasks.length === 0 && (
-                  <div className="flex-1 flex items-center justify-center text-t3 text-[11px] py-8">
+                  <div className="flex-1 flex items-center justify-center text-t2 text-[11px] py-8">
                     Sin tareas
                   </div>
                 )}

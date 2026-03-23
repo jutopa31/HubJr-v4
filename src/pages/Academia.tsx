@@ -81,7 +81,7 @@ export function Academia({ user: _user }: AcademiaProps) {
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                           {reading.mandatory && (
-                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-medium" style={{ background: 'var(--amberdim)', color: 'var(--amber)' }}>
+                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium" style={{ background: 'var(--amberdim)', color: 'var(--amber)' }}>
                               <Star size={8} />
                               Obligatorio
                             </div>
@@ -97,7 +97,7 @@ export function Academia({ user: _user }: AcademiaProps) {
                             <Avatar key={res.id} resident={res} size="sm" />
                           ))}
                         </div>
-                        <span className="text-t3 text-[10px]">{assignees.map(r => r.name).join(', ')}</span>
+                        <span className="text-t2 text-[11px]">{assignees.map(r => r.name).join(', ')}</span>
                       </div>
                     </div>
                   </div>
@@ -123,7 +123,7 @@ export function Academia({ user: _user }: AcademiaProps) {
                         </div>
                         {typeBadge(ev.type)}
                       </div>
-                      <div className="flex flex-wrap items-center gap-3 text-t3 text-[10px]">
+                      <div className="flex flex-wrap items-center gap-3 text-t3 text-[11px] font-medium">
                         <div className="flex items-center gap-1">
                           <Clock size={9} />
                           {ev.date} · {ev.time}
@@ -163,7 +163,7 @@ export function Academia({ user: _user }: AcademiaProps) {
                       <div className="flex-1">
                         <div className="text-t1 text-[12px] font-medium mb-1">{ev.title}</div>
                         <p className="text-t2 text-[11px] mb-2">{ev.desc}</p>
-                        <div className="flex flex-wrap items-center gap-3 text-t3 text-[10px]">
+                        <div className="flex flex-wrap items-center gap-3 text-t3 text-[11px] font-medium">
                           <div className="flex items-center gap-1">
                             <Clock size={9} />
                             {ev.date} · {ev.time}
@@ -197,7 +197,7 @@ export function Academia({ user: _user }: AcademiaProps) {
                     <Avatar resident={res} size="md" />
                     <div>
                       <div className="text-t1 text-[12px] font-medium">{res.full}</div>
-                      <div className="text-t3 text-[10px] mt-0.5">Trabajo de investigación en curso</div>
+                      <div className="text-t2 text-[11px] mt-0.5">Trabajo de investigación en curso</div>
                     </div>
                     <div className="ml-auto">
                       <Badge variant="indigo">En progreso</Badge>

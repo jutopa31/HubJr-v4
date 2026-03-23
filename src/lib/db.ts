@@ -88,6 +88,7 @@ export async function getTasks(): Promise<Task[]> {
   const idMap = buildResidentIdMap(profiles)
 
   const tasks = tasksRes.data ?? []
+  if (tasks.length === 0) return TASKS
   return tasks.map((t: Record<string, unknown>, idx: number) => ({
     id: typeof t.id === 'number' ? t.id : idx + 1,
     title: String(t.title ?? ''),

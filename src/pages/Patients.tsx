@@ -38,7 +38,7 @@ function PatientModal({ patient, onClose }: { patient: Patient; onClose: () => v
             <h2 className="font-syne font-bold text-t1 text-[16px] leading-tight">{patient.diagnosis}</h2>
             <div className="flex items-center gap-2 mt-2">
               {statusBadge(patient.status)}
-              <span className="text-t3 text-[10px]">{patient.age} años · {patient.sex === 'M' ? 'Masculino' : 'Femenino'}</span>
+              <span className="text-t3 text-[11px] font-medium">{patient.age} años · {patient.sex === 'M' ? 'Masculino' : 'Femenino'}</span>
             </div>
           </div>
           <button onClick={onClose} className="text-t3 hover:text-t1 transition-colors p-1 rounded-lg hover:bg-bg3">
@@ -49,14 +49,14 @@ function PatientModal({ patient, onClose }: { patient: Patient; onClose: () => v
         <div className="p-5 flex flex-col gap-5">
           {/* Info */}
           <div className="p-3 rounded-xl" style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
-            <div className="text-t3 text-[10px] mb-2 font-medium uppercase tracking-wider">Información</div>
+            <div className="text-t2 text-[11px] mb-2 font-medium uppercase tracking-wider">Información</div>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <div className="text-t3 text-[10px]">Sector</div>
+                <div className="text-t2 text-[11px]">Sector</div>
                 <div className="text-t1 text-[12px] mt-0.5">{patient.sector}</div>
               </div>
               <div>
-                <div className="text-t3 text-[10px]">Estado</div>
+                <div className="text-t2 text-[11px]">Estado</div>
                 <div className="mt-0.5">{statusBadge(patient.status)}</div>
               </div>
             </div>
@@ -64,7 +64,7 @@ function PatientModal({ patient, onClose }: { patient: Patient; onClose: () => v
 
           {/* Assigned */}
           <div>
-            <div className="text-t3 text-[10px] mb-2 font-medium uppercase tracking-wider">Equipo asignado</div>
+            <div className="text-t2 text-[11px] mb-2 font-medium uppercase tracking-wider">Equipo asignado</div>
             <div className="flex flex-wrap gap-2">
               {assignees.map(res => (
                 <div key={res.id} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg" style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
@@ -77,7 +77,7 @@ function PatientModal({ patient, onClose }: { patient: Patient; onClose: () => v
 
           {/* Evolutions */}
           <div>
-            <div className="text-t3 text-[10px] mb-3 font-medium uppercase tracking-wider">
+            <div className="text-t2 text-[11px] mb-3 font-medium uppercase tracking-wider">
               Evoluciones ({patient.evolutions.length})
             </div>
             <div className="flex flex-col gap-3">
@@ -94,7 +94,7 @@ function PatientModal({ patient, onClose }: { patient: Patient; onClose: () => v
                     <div className="flex-1 pb-3">
                       <div className="flex items-center gap-2 mb-1.5">
                         {author && <span className="text-[11px] font-medium" style={{ color: author.color }}>{author.full}</span>}
-                        <div className="flex items-center gap-1 text-t3 text-[10px]">
+                        <div className="flex items-center gap-1 text-t3 text-[11px] font-medium">
                           <Clock size={9} />
                           {ev.date}
                         </div>
@@ -168,7 +168,7 @@ export function Patients({ user: _user }: PatientsProps) {
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <div className="font-mono text-teal text-[10px] mb-1">{patient.id}</div>
+                  <div className="font-mono text-teal text-[11px] mb-1">{patient.id}</div>
                   <div className="font-syne font-semibold text-t1 text-[13px] leading-tight pr-2">{patient.diagnosis}</div>
                 </div>
                 <ChevronRight size={14} className="text-t3 group-hover:text-t2 flex-shrink-0 mt-0.5 transition-colors" />
@@ -176,16 +176,16 @@ export function Patients({ user: _user }: PatientsProps) {
 
               <div className="flex items-center gap-2 mb-3">
                 {statusBadge(patient.status)}
-                <span className="text-t3 text-[10px]">{patient.age} años · {patient.sex === 'M' ? 'M' : 'F'}</span>
+                <span className="text-t3 text-[11px] font-medium">{patient.age} años · {patient.sex === 'M' ? 'M' : 'F'}</span>
               </div>
 
-              <div className="flex items-center gap-1.5 mb-3 text-t3 text-[10px]">
+              <div className="flex items-center gap-1.5 mb-3 text-t3 text-[11px] font-medium">
                 <User size={10} />
                 {patient.sector}
               </div>
 
               {lastEv && (
-                <p className="text-t3 text-[10.5px] leading-relaxed line-clamp-2 mb-3 border-t pt-2.5" style={{ borderColor: 'var(--border)' }}>
+                <p className="text-t3 text-[11px] leading-relaxed line-clamp-2 mb-3 border-t pt-2.5" style={{ borderColor: 'var(--border)' }}>
                   {lastEv.text}
                 </p>
               )}
@@ -194,7 +194,7 @@ export function Patients({ user: _user }: PatientsProps) {
                 {assignees.map(res => (
                   <Avatar key={res.id} resident={res} size="sm" />
                 ))}
-                <span className="text-t3 text-[10px] ml-1">{assignees.map(r => r.name).join(', ')}</span>
+                <span className="text-t2 text-[11px] ml-1">{assignees.map(r => r.name).join(', ')}</span>
               </div>
             </button>
           )
