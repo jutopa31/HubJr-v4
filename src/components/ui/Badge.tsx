@@ -13,7 +13,7 @@ const variantStyles: Record<Variant, string> = {
 
 export function Badge({ variant = 'gray', children }: { variant?: Variant; children: ReactNode }) {
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium whitespace-nowrap ${variantStyles[variant]}`}>
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold whitespace-nowrap ${variantStyles[variant]}`}>
       {children}
     </span>
   )

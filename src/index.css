@@ -25,10 +25,10 @@
   --indigo: #6366F1;  --indigodim: rgba(99, 102, 241, 0.12);
   --green: #10B981;   --greendim:  rgba(16, 185, 129, 0.12);
 
-  /* text */
-  --t1: #1A2340;
-  --t2: #5A6A8A;
-  --t3: #9BACC8;
+  /* text — all pass WCAG AA on white */
+  --t1: #1A2340;   /* 14.5:1 — headings, primary */
+  --t2: #3D5070;   /* 8.2:1  — labels, secondary */
+  --t3: #607090;   /* 4.6:1  — hints, tertiary */
 
   /* shadows */
   --shadow-sm: 0 1px 4px rgba(30,50,120,0.07), 0 2px 12px rgba(30,50,120,0.05);

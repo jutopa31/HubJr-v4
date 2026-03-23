@@ -73,7 +73,7 @@ export function Dashboard({ user: _user }: DashboardProps) {
             const dayEvents = EVENTS.filter(e => e.date === isoDate)
             return (
               <div key={isoDate} className="flex flex-col items-center gap-1">
-                <span className="text-t3 text-[9px]">{DAY_NAMES[day.getDay()]}</span>
+                <span className="text-t2 text-[11px] font-medium">{DAY_NAMES[day.getDay()]}</span>
                 <div
                   className="w-8 h-8 rounded-lg flex items-center justify-center text-[12px] font-medium transition-all"
                   style={isToday
@@ -113,7 +113,7 @@ export function Dashboard({ user: _user }: DashboardProps) {
               </div>
               <div className="font-syne font-bold text-t1 text-2xl leading-none mb-1" style={{ color: c.text }}>{stat.value}</div>
               <div className="text-t1 text-[11px] font-medium mb-0.5">{stat.label}</div>
-              <div className="text-t3 text-[10px]">{stat.sub}</div>
+              <div className="text-t3 text-[11px] font-medium">{stat.sub}</div>
             </div>
           )
         })}
@@ -125,7 +125,7 @@ export function Dashboard({ user: _user }: DashboardProps) {
         <div className="rounded-xl p-4" style={{ background: 'var(--bg1)', border: '1px solid var(--border)' }}>
           <div className="flex items-center justify-between mb-4">
             <span className="font-syne font-semibold text-t1 text-[13px]">Tareas activas</span>
-            <span className="text-t3 text-[10px]">{activeTasks.length} tareas</span>
+            <span className="text-t2 text-[11px] font-medium">{activeTasks.length} tareas</span>
           </div>
           <div className="flex flex-col gap-2">
             {activeTasks.map(task => {
@@ -135,7 +135,7 @@ export function Dashboard({ user: _user }: DashboardProps) {
                   {res && <Avatar resident={res} size="sm" />}
                   <div className="flex-1 min-w-0">
                     <div className="text-t1 text-[11.5px] truncate">{task.title}</div>
-                    <div className="text-t3 text-[10px] mt-0.5">{task.due}</div>
+                    <div className="text-t3 text-[11px] mt-0.5 font-medium">{task.due}</div>
                   </div>
                   {statusBadge(task.status)}
                 </div>
@@ -148,7 +148,7 @@ export function Dashboard({ user: _user }: DashboardProps) {
         <div className="rounded-xl p-4" style={{ background: 'var(--bg1)', border: '1px solid var(--border)' }}>
           <div className="flex items-center justify-between mb-4">
             <span className="font-syne font-semibold text-t1 text-[13px]">Próximos eventos</span>
-            <span className="text-t3 text-[10px]">{upcomingEvents.length} eventos</span>
+            <span className="text-t2 text-[11px] font-medium">{upcomingEvents.length} eventos</span>
           </div>
           <div className="flex flex-col gap-2">
             {upcomingEvents.map(ev => {
@@ -158,7 +158,7 @@ export function Dashboard({ user: _user }: DashboardProps) {
                   <div className="w-1 self-stretch rounded-full flex-shrink-0 mt-0.5" style={{ background: eventTypeColor[ev.type] }} />
                   <div className="flex-1 min-w-0">
                     <div className="text-t1 text-[11.5px] truncate">{ev.title}</div>
-                    <div className="text-t3 text-[10px] mt-0.5">{ev.date} · {ev.time} · {ev.loc}</div>
+                    <div className="text-t3 text-[11px] mt-0.5 font-medium">{ev.date} · {ev.time} · {ev.loc}</div>
                   </div>
                   {presenter && <Avatar resident={presenter} size="sm" />}
                 </div>
@@ -182,11 +182,11 @@ export function Dashboard({ user: _user }: DashboardProps) {
                 <Avatar resident={res} size="lg" />
                 <div className="text-t1 text-[11px] font-medium text-center">{res.name}</div>
                 <div className="flex gap-1.5 flex-wrap justify-center">
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: 'var(--tealdim)', color: 'var(--teal)' }}>
-                    {myPatients.length}p
+                  <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full" style={{ background: 'var(--tealdim)', color: 'var(--teal)' }}>
+                    {myPatients.length} pac
                   </span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: 'var(--amberdim)', color: 'var(--amber)' }}>
-                    {myTasks.length}t
+                  <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full" style={{ background: 'var(--amberdim)', color: 'var(--amber)' }}>
+                    {myTasks.length} tar
                   </span>
                 </div>
               </div>

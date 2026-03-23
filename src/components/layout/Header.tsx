@@ -55,7 +55,7 @@ export function Header({ section, user, onAction, onLogout }: HeaderProps) {
     >
       <div>
         <h1 className="font-syne font-extrabold text-t1 text-[19px] leading-tight">{meta.title}</h1>
-        <p className="text-t3 text-[11.5px] mt-0.5 font-medium">{meta.subtitle}</p>
+        <p className="text-t2 text-[12px] mt-0.5 font-medium">{meta.subtitle}</p>
       </div>
 
       <div className="flex items-center gap-2.5">

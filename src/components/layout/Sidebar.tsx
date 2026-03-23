@@ -44,14 +44,14 @@ export function Sidebar({ section, onNavigate, user }: SidebarProps) {
           </div>
           <div>
             <div className="font-syne font-extrabold text-t1 text-[14px] leading-tight">HubJr</div>
-            <div className="text-t3 text-[9.5px] leading-tight font-medium tracking-wide uppercase">Residencia · v4</div>
+            <div className="text-t2 text-[10.5px] leading-tight font-semibold tracking-wide uppercase">Residencia · v4</div>
           </div>
         </div>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-3 flex flex-col gap-0.5">
-        <div className="text-[9px] font-bold text-t3 uppercase tracking-widest px-2 mb-2">Menú</div>
+        <div className="text-[10px] font-bold text-t2 uppercase tracking-widest px-2 mb-2">Menú</div>
         {navItems.map(item => {
           const Icon = item.icon
           const isActive = section === item.id
@@ -69,7 +69,7 @@ export function Sidebar({ section, onNavigate, user }: SidebarProps) {
               <Icon size={15} style={{ color: isActive ? 'var(--teal)' : 'var(--t3)' }} />
               <span className={`text-[13px] flex-1 ${isActive ? 'font-bold font-syne' : 'font-medium'}`}>{item.label}</span>
               {item.badge && (
-                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${badgeVariantStyle[item.badge.variant]}`}>
+                <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${badgeVariantStyle[item.badge.variant]}`}>
                   {item.badge.count}
                 </span>
               )}
@@ -98,7 +98,7 @@ export function Sidebar({ section, onNavigate, user }: SidebarProps) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-t1 text-[11.5px] font-semibold truncate">{user.name}</div>
-            <div className="text-[9.5px] font-medium" style={{ color: user.role === 'jefe' ? 'var(--teal)' : 'var(--indigo)' }}>
+            <div className="text-[11px] font-semibold" style={{ color: user.role === 'jefe' ? 'var(--teal)' : 'var(--indigo)' }}>
               {user.role === 'jefe' ? '★ Jefatura' : 'Residente'}
             </div>
           </div>
