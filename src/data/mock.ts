@@ -1,4 +1,4 @@
-import type { Resident, Patient, Task, CalEvent, Reading } from '../types'
+import type { Resident, Patient, Task, CalEvent, Reading, Licencia } from '../types'
 
 export const RESIDENTS: Resident[] = [
   {id:1,name:'García',full:'Dr. García',initial:'G',color:'#05D9A4',bg:'rgba(5,217,164,.12)',email:'garcia@residencia.com'},
@@ -54,6 +54,12 @@ export const EVENTS: CalEvent[] = [
   {id:5,title:'Discusión: Biomarcadores en LCR',date:'2026-03-28',time:'11:00',type:'presentacion',loc:'Sala de Reuniones',presenter:5,desc:'Dra. Sánchez presenta avances de trabajo de investigación.'},
   {id:6,title:'Ateneo Semanal',date:'2026-03-31',time:'09:00',type:'ateneo',loc:'Aula Magna',presenter:null,desc:'Caso clínico a definir.'},
   {id:7,title:'Guardia — Martínez + Sánchez',date:'2026-03-29',time:'08:00',type:'guardia',loc:'Guardia Central',presenter:null,desc:'Guardia de 24 horas.'},
+]
+
+export const LICENCIAS: Licencia[] = [
+  {id:1,residentId:2,from:'2026-03-30',to:'2026-04-04',type:'vacaciones'},
+  {id:2,residentId:4,from:'2026-03-26',to:'2026-03-27',type:'congreso'},
+  {id:3,residentId:5,from:'2026-03-24',to:'2026-03-24',type:'medica'},
 ]
 
 export const READINGS: Reading[] = [
