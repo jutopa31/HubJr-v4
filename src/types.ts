@@ -72,3 +72,14 @@ export interface Reading {
 }
 
 export type Section = 'dashboard' | 'pacientes' | 'tareas' | 'calendario' | 'academia'
+
+export type ResidentEstado = 'disponible' | 'rotando' | 'licencia'
+export type LicenciaType = 'vacaciones' | 'medica' | 'congreso' | 'otra'
+
+export interface Licencia {
+  id: number
+  residentId: number
+  from: string
+  to: string
+  type: LicenciaType
+}
