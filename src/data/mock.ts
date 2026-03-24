@@ -13,26 +13,26 @@ export const PATIENTS: Patient[] = [
     {date:'2026-03-19',author:1,text:'Paciente hemodinámicamente estable. Sin nuevos déficits. TC control sin cambios. Plan: RMN con DWI.'},
     {date:'2026-03-20',author:3,text:'RMN informa infarto agudo fronto-parietal derecho sin transformación hemorrágica. Se inicia antiagregación AAS 100mg.'},
     {date:'2026-03-21',author:1,text:'Mejoría clínica leve. Hemiparesia izquierda 3/5 proximal. Lenguaje conservado. Interconsulta kinesiología solicitada.'},
-  ]},
+  ],chart:{patientId:'PAC-001',antecedentes:'HTA, dislipemia. Fumador 20 pack-years. Fibrilación auricular paroxística no anticoagulada.',motivoConsulta:'Pérdida brusca de fuerza en hemicuerpo izquierdo y desviación de comisura labial de 4 horas de evolución.',examenFisico:'TA 158/92 mmHg. FC 88 irr. Hemiparesia izquierda 3/5 proximal, 2/5 distal. Paresia facial central izquierda. Lenguaje conservado. NIHSS 9.',estudiosComplementarios:'TC s/c: sin hemorragia. RMN DWI 20/03: infarto agudo fronto-parietal derecho ~45cc sin transformación hemorrágica. Eco Doppler carotídeo: sin estenosis. Holter: FA paroxística.',diagnostico:'ACV isquémico territorio ACM derecha por cardioembolia (FA paroxística).',plan:'Anticoagulación: HBPM puente → apixabán 5mg c/12h. Estatina alta intensidad: atorvastatina 80mg. Kinesioterapia motora y fonoaudiología. RMN control a los 7 días.',pendientes:'Ecocardiograma transtorácico. Holter 24h de control. Interconsulta cardiología para inicio NACO.',updatedAt:'2026-03-21',updatedBy:1},images:[]},
   {id:'PAC-002',age:45,sex:'F',sector:'Consultorios — Ambulatorio',status:'ambulatorio',diagnosis:'Esclerosis Múltiple RR — brote motor activo',assignedTo:[2],evolutions:[
     {date:'2026-03-15',author:2,text:'Debilidad progresiva en MMII desde hace 10 días. EDSS basal 2.0. Se indica pulsos de metilprednisolona x3 días.'},
     {date:'2026-03-18',author:2,text:'Post-pulsos: leve mejoría subjetiva. Fuerza 4/5 distal. RMN: nueva lesión T2 cordón lateral. Control en 1 mes.'},
-  ]},
+  ],images:[]},
   {id:'PAC-003',age:72,sex:'M',sector:'Sala 5 — Cama 3',status:'internado',diagnosis:'Epilepsia de difícil control — estado postcrítico',assignedTo:[4,5],evolutions:[
     {date:'2026-03-20',author:4,text:'Ingresa por crisis tónico-clónica generalizada de 3 minutos. Sin recuperación completa. EEG: actividad epileptiforme bilateral.'},
     {date:'2026-03-21',author:5,text:'Mayor lucidez. Responde órdenes simples. Se optimiza dosis de ácido valproico. Aguarda nivel sérico.'},
-  ]},
+  ],chart:{patientId:'PAC-003',antecedentes:'Epilepsia focal con generalización secundaria diagnosticada hace 12 años. En tratamiento con ácido valproico 1000mg/día y levetiracetam 1500mg/día.',motivoConsulta:'Crisis tónico-clónica generalizada de 3 minutos sin recuperación completa. Traído por familiar.',examenFisico:'Somnoliento, responde órdenes simples. Sin focalidad neurológica postcrítica evidente. Mordedura lateral de lengua.',estudiosComplementarios:'EEG 20/03: actividad epileptiforme bilateral, puntas-onda en región fronto-central. Nivel sérico VPA: 42 mcg/mL (sub-terapéutico). TC cráneo: sin lesiones agudas.',diagnostico:'Crisis epiléptica tónico-clónica generalizada en contexto de niveles subterapéuticos de ácido valproico.',plan:'Optimizar dosis VPA: incremento a 1500mg/día. Mantener levetiracetam. Monitoreo de niveles séricos. Restricción de actividades de riesgo.',pendientes:'Nivel sérico VPA de control en 48h. EEG sueño. Evaluación neuropsicológica. Educación familiar sobre primeros auxilios en crisis.',updatedAt:'2026-03-21',updatedBy:4},images:[]},
   {id:'PAC-004',age:58,sex:'F',sector:'Guardia — UC',status:'guardia',diagnosis:'Cefalea en trueno — a descartar HSA',assignedTo:[3],evolutions:[
     {date:'2026-03-21',author:3,text:'Ingresa por cefalea de inicio explosivo. TC sin hemorragia subaracnoidea. PL: xantocromía positiva. Interna para estudio.'},
-  ]},
+  ],images:[]},
   {id:'PAC-005',age:34,sex:'M',sector:'Alta domiciliaria',status:'alta',diagnosis:'Síndrome de Guillain-Barré en resolución',assignedTo:[1],evolutions:[
     {date:'2026-03-10',author:1,text:'Alta hospitalaria luego de 18 días. IVIG completo. Fuerza 4/5 en MMII. Continúa kinesiología domiciliaria.'},
     {date:'2026-03-17',author:1,text:'Control ambulatorio: mejoría sostenida. Fuerza 4+/5. Deambula con apoyo. Sin disfagia. Control en 2 semanas.'},
-  ]},
+  ],images:[]},
   {id:'PAC-006',age:81,sex:'F',sector:'Sala 2 — Cama 7',status:'internado',diagnosis:'Enfermedad de Alzheimer — síntomas conductuales',assignedTo:[2,4],evolutions:[
     {date:'2026-03-18',author:2,text:'Agitación nocturna severa. Ajuste quetiapina 25mg noche. Familiar informado.'},
     {date:'2026-03-21',author:4,text:'Mejoría patrón de sueño. Menor agitación. MMSE: 14/30.'},
-  ]},
+  ],chart:{patientId:'PAC-006',antecedentes:'EA estadio moderado (GDS 5). HTA. Hipotiroidismo en tratamiento. Institucionalizada hace 2 años.',motivoConsulta:'Agitación nocturna severa con conductas disruptivas en los últimos 5 días. Familiar refiere empeoramiento del sueño.',examenFisico:'Desorientada en tiempo y espacio. MMSE 14/30. Sin signos de foco neurológico agudo. Sin signos de infección activa.',estudiosComplementarios:'Laboratorio: sin alteraciones metabólicas ni infecciosas. TSH normal. Orina normal.',diagnostico:'Síntomas conductuales y psicológicos de la demencia (SCPD) en el contexto de EA estadio moderado.',plan:'Quetiapina 25mg/noche con escalada gradual según respuesta. Higiene del sueño. Estimulación cognitiva diurna.',pendientes:'Control MMSE en 30 días. Evaluación de carga del cuidador. Reunión familiar para ajuste de plan terapéutico.',updatedAt:'2026-03-21',updatedBy:2},images:[]},
 ]
 
 export const TASKS: Task[] = [
