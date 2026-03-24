@@ -30,6 +30,38 @@ export interface Evolution {
   text: string
 }
 
+export type ChartSectionKey =
+  | 'antecedentes'
+  | 'motivoConsulta'
+  | 'examenFisico'
+  | 'estudiosComplementarios'
+  | 'diagnostico'
+  | 'plan'
+  | 'pendientes'
+
+export interface PatientChart {
+  patientId: string
+  antecedentes: string
+  motivoConsulta: string
+  examenFisico: string
+  estudiosComplementarios: string
+  diagnostico: string
+  plan: string
+  pendientes: string
+  updatedAt: string
+  updatedBy: number
+}
+
+export interface PatientImage {
+  id: string
+  patientId: string
+  thumbnailUrl: string
+  fullUrl: string
+  storagePath: string
+  uploadedAt: string
+  uploadedBy: number
+}
+
 export interface Patient {
   id: string
   age: number
@@ -39,6 +71,8 @@ export interface Patient {
   diagnosis: string
   assignedTo: number[]
   evolutions: Evolution[]
+  chart?: PatientChart
+  images?: PatientImage[]
 }
 
 export interface Task {

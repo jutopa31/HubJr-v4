@@ -1,6 +1,6 @@
 import { supabase, IS_MOCK } from './supabase'
 import { RESIDENTS, PATIENTS, TASKS, EVENTS, READINGS } from '../data/mock'
-import type { Patient, Task, CalEvent, Reading } from '../types'
+import type { Patient, PatientChart, PatientImage, ChartSectionKey, Task, CalEvent, Reading } from '../types'
 
 // Build a mapping from profile UUID → resident numeric ID using email matching
 function buildResidentIdMap(profiles: { id: string; email?: string; full_name?: string }[]): Map<string, number> {
@@ -187,6 +187,117 @@ export async function addEvolution(patientId: string, text: string, authorId: st
     author_id: authorId,
     date: new Date().toISOString().slice(0, 10),
   })
+  if (error) throw error
+}
+
+// ── Patient Chart ──────────────────────────────────────────────────────────
+
+export async function getPatientChart(patientId: string): Promise<PatientChart | null> {
+  if (IS_MOCK) {
+    return PATIENTS.find(p => p.id === patientId)?.chart ?? null
+  }
+  const { data, error } = await supabase!
+    .from('patient_charts')
+    .select('*')
+    .eq('patient_id', patientId)
+    .maybeSingle()
+  if (error) throw error
+  if (!data) return null
+  return {
+    patientId: data.patient_id,
+    antecedentes: data.antecedentes ?? '',
+    motivoConsulta: data.motivo_consulta ?? '',
+    examenFisico: data.examen_fisico ?? '',
+    estudiosComplementarios: data.estudios_complementarios ?? '',
+    diagnostico: data.diagnostico ?? '',
+    plan: data.plan ?? '',
+    pendientes: data.pendientes ?? '',
+    updatedAt: data.updated_at ?? '',
+    updatedBy: 0,
+  }
+}
+
+export async function upsertPatientChart(
+  patientId: string,
+  data: Partial<Record<ChartSectionKey, string>>,
+  _authorId: string
+): Promise<void> {
+  if (IS_MOCK) return
+  const payload: Record<string, string> = { patient_id: patientId }
+  if (data.antecedentes !== undefined)            payload.antecedentes = data.antecedentes
+  if (data.motivoConsulta !== undefined)          payload.motivo_consulta = data.motivoConsulta
+  if (data.examenFisico !== undefined)            payload.examen_fisico = data.examenFisico
+  if (data.estudiosComplementarios !== undefined) payload.estudios_complementarios = data.estudiosComplementarios
+  if (data.diagnostico !== undefined)             payload.diagnostico = data.diagnostico
+  if (data.plan !== undefined)                    payload.plan = data.plan
+  if (data.pendientes !== undefined)              payload.pendientes = data.pendientes
+  const { error } = await supabase!
+    .from('patient_charts')
+    .upsert(payload, { onConflict: 'patient_id' })
+  if (error) throw error
+}
+
+// ── Patient Images ──────────────────────────────────────────────────────────
+
+export async function getPatientImages(patientId: string): Promise<PatientImage[]> {
+  if (IS_MOCK) {
+    return PATIENTS.find(p => p.id === patientId)?.images ?? []
+  }
+  const { data, error } = await supabase!
+    .from('patient_images')
+    .select('*')
+    .eq('patient_id', patientId)
+    .order('uploaded_at', { ascending: true })
+  if (error) throw error
+  return (data ?? []).map((r: Record<string, unknown>) => ({
+    id: String(r.id),
+    patientId: String(r.patient_id),
+    thumbnailUrl: String(r.thumbnail_url ?? ''),
+    fullUrl: String(r.full_url ?? ''),
+    storagePath: String(r.storage_path ?? ''),
+    uploadedAt: String(r.uploaded_at ?? ''),
+    uploadedBy: 0,
+  }))
+}
+
+export async function addPatientImage(
+  patientId: string,
+  thumbnailUrl: string,
+  fullUrl: string,
+  storagePath: string,
+  authorId: string
+): Promise<PatientImage> {
+  if (IS_MOCK) {
+    return {
+      id: `mock-${Date.now()}`,
+      patientId,
+      thumbnailUrl,
+      fullUrl,
+      storagePath,
+      uploadedAt: new Date().toISOString().slice(0, 10),
+      uploadedBy: 0,
+    }
+  }
+  const { data, error } = await supabase!
+    .from('patient_images')
+    .insert({ patient_id: patientId, thumbnail_url: thumbnailUrl, full_url: fullUrl, storage_path: storagePath, uploaded_by: authorId })
+    .select()
+    .single()
+  if (error) throw error
+  return {
+    id: String(data.id),
+    patientId: String(data.patient_id),
+    thumbnailUrl: String(data.thumbnail_url),
+    fullUrl: String(data.full_url),
+    storagePath: String(data.storage_path),
+    uploadedAt: String(data.uploaded_at),
+    uploadedBy: 0,
+  }
+}
+
+export async function deletePatientImage(imageId: string, _storagePath: string): Promise<void> {
+  if (IS_MOCK) return
+  const { error } = await supabase!.from('patient_images').delete().eq('id', imageId)
   if (error) throw error
 }
 
