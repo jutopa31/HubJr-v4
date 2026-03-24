@@ -23,7 +23,7 @@ export interface UploadedImage {
 
 export async function uploadImageToStorage(file: File, patientId: string): Promise<UploadedImage> {
   if (!supabase) throw new Error('Supabase no disponible')
-  if (file.size > 10 * 1024 * 1024) throw new Error('Imagen demasiado grande (máx 10 MB)')
+  if (file.size > 50 * 1024 * 1024) throw new Error('Archivo demasiado grande (máx 50 MB)')
 
   const path = buildPath(patientId, file.name)
   const { error: uploadError } = await supabase.storage

@@ -15,7 +15,7 @@ import {
   deletePatientImage,
   addEvolution,
 } from '../lib/db'
-import { uploadMultipleImagesToStorage, deleteImageFromStorage } from '../lib/storageService'
+import { uploadImageToStorage, deleteImageFromStorage } from '../lib/storageService'
 
 interface PatientsProps {
   user: AppUser
@@ -116,16 +116,15 @@ function PatientModal({
     }
   }
 
-  async function handleImageUpload(files: FileList) {
+  async function handleImageUpload(files: File[]) {
     if (IS_MOCK) { showToast('Carga de imágenes no disponible en modo demo'); return }
-    const arr = Array.from(files)
+    const arr = files
     setIsUploading(true)
     setUploadProgress({ uploaded: 0, total: arr.length })
     try {
-      const uploads = await uploadMultipleImagesToStorage(arr, patient.id)
       const newImages: PatientImage[] = []
-      for (let i = 0; i < uploads.length; i++) {
-        const { path, fullUrl } = uploads[i]
+      for (let i = 0; i < arr.length; i++) {
+        const { path, fullUrl } = await uploadImageToStorage(arr[i], patient.id)
         const img = await addPatientImage(patient.id, fullUrl, fullUrl, path, user.id)
         newImages.push(img)
         setUploadProgress({ uploaded: i + 1, total: arr.length })
