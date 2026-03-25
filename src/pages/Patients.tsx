@@ -422,7 +422,7 @@ export function Patients({ user, showToast }: PatientsProps) {
                 </div>
                 <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
                   {chartIncomplete && (
-                    <AlertTriangle size={13} style={{ color: 'var(--amber)' }} title="Historia incompleta" />
+                    <AlertTriangle size={13} style={{ color: 'var(--amber)' }} aria-label="Historia incompleta" />
                   )}
                   <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" style={{ color: 'var(--t3)' }} />
                 </div>

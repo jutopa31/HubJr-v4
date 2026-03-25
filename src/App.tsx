@@ -52,7 +52,7 @@ export default function App() {
       case 'dashboard':
         return <Dashboard user={user!} />
       case 'pacientes':
-        return <Patients user={user!} />
+        return <Patients user={user!} showToast={showToast} />
       case 'tareas':
         return <Tasks user={user!} showToast={showToast} />
       case 'calendario':
